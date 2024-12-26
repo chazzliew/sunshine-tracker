@@ -196,13 +196,14 @@ h1 {
 .stats-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    align-items: flex-start;
+    margin-bottom: 30px;
 }
 
 .stats-period-selector {
     display: flex;
     gap: 10px;
+    margin-top: 3px;
 }
 
 .period-btn {
@@ -341,12 +342,19 @@ h1 {
     }
 
     .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
     }
 
     .time-input-group {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 15px;
+        padding: 0 10px;
+    }
+
+    .time-input input[type="time"] {
+        padding: 8px;
+        font-size: 14px;
     }
 
     .stats-header {
@@ -385,11 +393,43 @@ h1 {
         flex-direction: column;
         gap: 10px;
     }
+
+    .stat-label {
+        font-size: 12px;
+    }
+
+    .stat-value {
+        font-size: 18px;
+    }
 }
 
 @media (max-width: 480px) {
     .stats-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    .stat-item {
+        padding: 8px 4px;
+    }
+
+    .stat-label {
+        font-size: 11px;
+        margin-bottom: 4px;
+    }
+
+    .stat-value {
+        font-size: 16px;
+    }
+
+    /* 优化标题和按钮在小屏幕上的布局 */
+    .stats-header {
+        margin-bottom: 20px;
+    }
+
+    .stats-period-selector button {
+        padding: 6px 12px;
+        font-size: 13px;
     }
 
     .calendar-tooltip {

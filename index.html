@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ff8c00">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>晒太阳打卡</title>
+    <link rel="stylesheet" href="/sunshine-tracker/styles.css">
+    <link rel="stylesheet" href="/sunshine-tracker/christmas-theme.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0"></script>
+</head>
+<body>
+    <div class="snowfall"></div>
+    
+    <div class="container">
+        <div class="datetime-display">
+            <div class="current-date"></div>
+            <div class="current-time"></div>
+        </div>
+
+        <h1>☀️ 晒太阳打卡</h1>
+        
+        <!-- 打卡部分 -->
+        <div class="check-in-section card-container">
+            <div class="check-in-card">
+                <h3>今日打卡</h3>
+                <div class="time-input-group">
+                    <div class="time-input">
+                        <label>开始时间</label>
+                        <input type="time" id="startTime" required>
+                    </div>
+                    <div class="time-input">
+                        <label>结束时间</label>
+                        <input type="time" id="endTime" required>
+                    </div>
+                </div>
+                <div class="duration-hint">时长：<span id="durationHint">0</span> 分钟</div>
+                <button id="checkInBtn">打卡</button>
+            </div>
+        </div>
+
+        <!-- 统计概览 -->
+        <div class="stats-overview card-container">
+            <div class="stats-header">
+                <h2>数据统计</h2>
+                <div class="stats-period-selector">
+                    <button class="period-btn active" data-period="week">周</button>
+                    <button class="period-btn" data-period="month">月</button>
+                    <button class="period-btn" data-period="year">年</button>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-label">总时长</span>
+                    <span id="totalDuration" class="stat-value">0分钟</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">平均时长</span>
+                    <span id="averageDuration" class="stat-value">0分钟</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">打卡次数</span>
+                    <span id="checkInCount" class="stat-value">0次</span>
+                </div>
+            </div>
+            <canvas id="statsChart"></canvas>
+        </div>
+
+        <!-- 月历打卡记录 -->
+        <div class="calendar-section card-container">
+            <h2>打卡日历</h2>
+            <div class="calendar-header">
+                <button id="prevMonth">&lt;</button>
+                <span id="currentMonth"></span>
+                <button id="nextMonth">&gt;</button>
+            </div>
+            <div class="calendar-grid">
+                <div class="calendar-weekdays">
+                    <div>日</div><div>一</div><div>二</div><div>三</div>
+                    <div>四</div><div>五</div><div>六</div>
+                </div>
+                <div id="calendarDays" class="calendar-days"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 确认对话框 -->
+    <div id="confirmDialog" class="dialog-overlay">
+        <div class="dialog-content">
+            <h4>今日已有打卡记录</h4>
+            <p class="existing-record"></p>
+            <p>是否要用新记录替换已有记录？</p>
+            <div class="dialog-buttons">
+                <button id="confirmReplace" class="btn-primary">确认替换</button>
+                <button id="cancelReplace" class="btn-secondary">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/sunshine-tracker/script.js"></script>
+    <script src="/sunshine-tracker/snow-effect.js"></script>
+</body>
+</html> 

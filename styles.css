@@ -461,4 +461,152 @@ h1 {
 #statsChart {
     width: 100% !important;
     margin-top: 15px;
+}
+
+/* 统一标题样式 */
+.card-container h2, .card-container h3 {
+    text-align: left;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 18px;
+}
+
+/* 针对 iOS 设备的优化 */
+@supports (-webkit-touch-callout: none) {
+    /* 优化时间选择器在 iOS 上的显示 */
+    .time-input input[type="time"] {
+        -webkit-appearance: none;
+        background-color: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    /* 优化按钮在 iOS 上的显示 */
+    button {
+        -webkit-appearance: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
+/* 移动端优化（特别是 iPhone 15 Pro Max） */
+@media screen and (max-width: 430px) {
+    /* 整体容器调整 */
+    .container {
+        padding: 15px;
+        gap: 15px;
+    }
+
+    /* 今日打卡部分 */
+    .check-in-card h3 {
+        font-size: 18px;
+        text-align: left;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .time-input-group {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 0;
+        margin-bottom: 15px;
+    }
+
+    .time-input label {
+        font-size: 13px;
+        color: #666;
+        margin-bottom: 6px;
+    }
+
+    .time-input input[type="time"] {
+        padding: 10px;
+        font-size: 15px;
+        border-radius: 8px;
+    }
+
+    /* 数据统计部分 */
+    .stats-header {
+        flex-direction: row;  /* 改回水平布局 */
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 0;
+    }
+
+    .stats-period-selector {
+        margin-top: 0;
+    }
+
+    .period-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+        border-radius: 15px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin: 15px 0;
+    }
+
+    .stat-item {
+        padding: 8px 4px;
+    }
+
+    .stat-label {
+        font-size: 12px;
+        margin-bottom: 4px;
+        color: #666;
+    }
+
+    .stat-value {
+        font-size: 17px;
+        font-weight: 600;
+    }
+
+    /* 图表调整 */
+    .stats-overview {
+        min-height: 300px;
+    }
+
+    #statsChart {
+        height: 200px !important;
+    }
+
+    /* 打卡按钮优化 */
+    #checkInBtn {
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+        border-radius: 20px;
+        margin-top: 10px;
+    }
+
+    /* 日期时间显示优化 */
+    .datetime-display {
+        flex-direction: row;  /* 改回水平布局 */
+        justify-content: space-between;
+        gap: 10px;
+        font-size: 13px;
+    }
+
+    .current-date, .current-time {
+        padding: 6px 12px;
+        border-radius: 15px;
+    }
+}
+
+/* 针对更大的 iPhone（Pro Max 等）的微调 */
+@media screen and (min-width: 428px) and (max-width: 430px) {
+    .stats-grid {
+        gap: 15px;
+    }
+
+    .stat-value {
+        font-size: 18px;
+    }
+
+    .time-input input[type="time"] {
+        padding: 12px;
+    }
 } 

@@ -196,14 +196,15 @@ h1 {
 .stats-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 30px;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-right: 10px;
 }
 
 .stats-period-selector {
     display: flex;
-    gap: 10px;
-    margin-top: 3px;
+    gap: 8px;
+    margin-left: 20px;
 }
 
 .period-btn {
@@ -498,46 +499,59 @@ h1 {
     }
 
     /* 数据统计部分的按钮和数据 */
-    .period-btn {
-        padding: 5px 10px;
-        font-size: 10px;    /* 调整周月年按钮字体大小 */
-        border-radius: 12px;
+    .stats-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-right: 0;
     }
 
-    /* 统计数据显示 */
+    .stats-period-selector {
+        margin-left: 15px;
+    }
+
+    .period-btn {
+        padding: 4px 8px;
+        font-size: 10px;
+        border-radius: 10px;
+    }
+
+    /* 统计数据显示优化 */
     .stats-grid {
         grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-        margin: 15px 0 25px 0;
+        gap: 4px;
+        margin: 15px 0;
     }
 
     .stat-item {
-        padding: 6px 4px;
+        padding: 4px 2px;
+        white-space: nowrap;
     }
 
     .stat-label {
-        font-size: 10px;     /* 调整标签文字大小 */
-        margin-bottom: 3px;
+        font-size: 9px;
+        margin-bottom: 2px;
         color: #666;
     }
 
     .stat-value {
-        font-size: 12px;     /* 调整数值文字大小 */
+        font-size: 11px;
         font-weight: 600;
     }
 }
 
 /* 针对更大的 iPhone（Pro Max 等）的微调 */
-@media screen and (min-width: 428px) and (max-width: 430px) {
+@media screen and (min-width: 375px) and (max-width: 430px) {
     .stats-grid {
-        gap: 15px;
+        gap: 6px;
+    }
+
+    .stat-label {
+        font-size: 10px;
     }
 
     .stat-value {
-        font-size: 18px;
-    }
-
-    .time-input input[type="time"] {
-        padding: 12px;
+        font-size: 12px;
     }
 } 

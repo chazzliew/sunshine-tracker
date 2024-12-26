@@ -468,7 +468,7 @@ h1 {
     text-align: left;
     margin-bottom: 20px;
     color: #333;
-    font-size: 18px;
+    font-size: 18px;  /* 电脑端默认大小 */
 }
 
 /* 针对 iOS 设备的优化 */
@@ -492,21 +492,15 @@ h1 {
 
 /* 移动端优化（特别是 iPhone 15 Pro Max） */
 @media screen and (max-width: 430px) {
-    /* 数据统计部分的标题和按钮 */
-    .stats-overview h2 {
-        font-size: 16px;  /* 减小标题字体 */
+    /* 统一标题大小 */
+    .card-container h2, .card-container h3 {
+        font-size: 16px;  /* 统一移动端标题大小 */
     }
 
-    .stats-header {
-        flex-direction: row;
-        align-items: center;
-        margin-bottom: 25px;  /* 增加与下方内容的间距 */
-        padding: 0;
-    }
-
+    /* 数据统计部分的按钮和数据 */
     .period-btn {
-        padding: 5px 10px;  /* 减小按钮内边距 */
-        font-size: 12px;    /* 减小按钮文字大小 */
+        padding: 5px 10px;
+        font-size: 10px;    /* 调整周月年按钮字体大小 */
         border-radius: 12px;
     }
 
@@ -514,7 +508,7 @@ h1 {
     .stats-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 8px;
-        margin: 15px 0 25px 0;  /* 增加与图表的间距 */
+        margin: 15px 0 25px 0;
     }
 
     .stat-item {
@@ -522,29 +516,14 @@ h1 {
     }
 
     .stat-label {
-        font-size: 11px;     /* 减小标签文字 */
+        font-size: 10px;     /* 调整标签文字大小 */
         margin-bottom: 3px;
         color: #666;
     }
 
     .stat-value {
-        font-size: 15px;     /* 减小数值文字 */
+        font-size: 12px;     /* 调整数值文字大小 */
         font-weight: 600;
-    }
-
-    /* 图表调整 */
-    .stats-overview {
-        min-height: 380px;   /* 增加整体高度 */
-    }
-
-    #statsChart {
-        height: 280px !important;  /* 增加图表高度 */
-        margin-top: 20px;         /* 增加与上方内容的间距 */
-    }
-
-    /* 图表字体大小调整 */
-    #statsChart canvas {
-        font-size: 11px !important;  /* 调整图表文字大小 */
     }
 }
 

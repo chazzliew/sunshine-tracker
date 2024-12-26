@@ -492,107 +492,59 @@ h1 {
 
 /* 移动端优化（特别是 iPhone 15 Pro Max） */
 @media screen and (max-width: 430px) {
-    /* 整体容器调整 */
-    .container {
-        padding: 15px;
-        gap: 15px;
+    /* 数据统计部分的标题和按钮 */
+    .stats-overview h2 {
+        font-size: 16px;  /* 减小标题字体 */
     }
 
-    /* 今日打卡部分 */
-    .check-in-card h3 {
-        font-size: 18px;
-        text-align: left;
-        margin-bottom: 20px;
-        color: #333;
-    }
-
-    .time-input-group {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        padding: 0;
-        margin-bottom: 15px;
-    }
-
-    .time-input label {
-        font-size: 13px;
-        color: #666;
-        margin-bottom: 6px;
-    }
-
-    .time-input input[type="time"] {
-        padding: 10px;
-        font-size: 15px;
-        border-radius: 8px;
-    }
-
-    /* 数据统计部分 */
     .stats-header {
-        flex-direction: row;  /* 改回水平布局 */
+        flex-direction: row;
         align-items: center;
-        margin-bottom: 20px;
+        margin-bottom: 25px;  /* 增加与下方内容的间距 */
         padding: 0;
-    }
-
-    .stats-period-selector {
-        margin-top: 0;
     }
 
     .period-btn {
-        padding: 6px 12px;
-        font-size: 13px;
-        border-radius: 15px;
+        padding: 5px 10px;  /* 减小按钮内边距 */
+        font-size: 12px;    /* 减小按钮文字大小 */
+        border-radius: 12px;
     }
 
+    /* 统计数据显示 */
     .stats-grid {
         grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        margin: 15px 0;
+        gap: 8px;
+        margin: 15px 0 25px 0;  /* 增加与图表的间距 */
     }
 
     .stat-item {
-        padding: 8px 4px;
+        padding: 6px 4px;
     }
 
     .stat-label {
-        font-size: 12px;
-        margin-bottom: 4px;
+        font-size: 11px;     /* 减小标签文字 */
+        margin-bottom: 3px;
         color: #666;
     }
 
     .stat-value {
-        font-size: 17px;
+        font-size: 15px;     /* 减小数值文字 */
         font-weight: 600;
     }
 
     /* 图表调整 */
     .stats-overview {
-        min-height: 300px;
+        min-height: 380px;   /* 增加整体高度 */
     }
 
     #statsChart {
-        height: 200px !important;
+        height: 280px !important;  /* 增加图表高度 */
+        margin-top: 20px;         /* 增加与上方内容的间距 */
     }
 
-    /* 打卡按钮优化 */
-    #checkInBtn {
-        width: 100%;
-        padding: 12px;
-        font-size: 15px;
-        border-radius: 20px;
-        margin-top: 10px;
-    }
-
-    /* 日期时间显示优化 */
-    .datetime-display {
-        flex-direction: row;  /* 改回水平布局 */
-        justify-content: space-between;
-        gap: 10px;
-        font-size: 13px;
-    }
-
-    .current-date, .current-time {
-        padding: 6px 12px;
-        border-radius: 15px;
+    /* 图表字体大小调整 */
+    #statsChart canvas {
+        font-size: 11px !important;  /* 调整图表文字大小 */
     }
 }
 

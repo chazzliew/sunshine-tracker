@@ -287,16 +287,22 @@ h1 {
     align-items: center;
     justify-content: center;
     border: none;
-    background: #f8f8f8;
+    background: #e8f5e9;
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.2s ease;
     position: relative;
+    color: #333;
+}
+
+.calendar-day.other-month {
+    background: #f0f0f0;
+    color: #333;
 }
 
 .calendar-day.checked {
-    background-color: #fff3e0;
-    color: #ff8c00;
+    background-color: #e1bee7;
+    color: #333;
     font-weight: 500;
 }
 

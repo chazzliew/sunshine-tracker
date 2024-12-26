@@ -51,6 +51,7 @@ body {
     padding: 25px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     transition: all 0.3s ease;
+    margin-bottom: 20px;
 }
 
 .card-container:hover {
@@ -188,6 +189,8 @@ h1 {
     height: 400px;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .stats-header {
@@ -350,8 +353,26 @@ h1 {
         justify-content: center;
     }
 
+    /* 修复统计图表在移动端的显示 */
+    .stats-overview {
+        height: auto;
+        min-height: 400px;
+        margin-bottom: 20px;
+    }
+
+    #statsChart {
+        height: 300px !important;
+    }
+
+    /* 调整日历在移动端的显示 */
+    .calendar-section {
+        margin-top: 20px;
+        padding: 15px;
+    }
+
     .calendar-day {
         font-size: 14px;
+        height: 30px;
     }
 
     .datetime-display {
@@ -369,4 +390,29 @@ h1 {
         font-size: 10px;
         padding: 4px 8px;
     }
+
+    /* 进一步优化小屏幕显示 */
+    .card-container {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .stats-overview {
+        min-height: 350px;
+    }
+
+    #statsChart {
+        height: 250px !important;
+    }
+}
+
+/* 确保图表容器有足够空间 */
+#statsChart {
+    width: 100% !important;
+    margin-top: 15px;
 } 

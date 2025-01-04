@@ -554,4 +554,48 @@ h1 {
     .stat-value {
         font-size: 12px;
     }
+}
+
+/* 用户信息样式 */
+.user-info {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+#currentUserDisplay {
+    color: #fff;
+    font-size: 14px;
+}
+
+#logoutBtn {
+    padding: 6px 12px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#logoutBtn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 480px) {
+    .user-info {
+        margin-bottom: 15px;
+    }
+    
+    #currentUserDisplay {
+        font-size: 13px;
+    }
+    
+    #logoutBtn {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
 } 

@@ -1,6 +1,21 @@
 class SunshineTracker {
     constructor() {
-        this.records = JSON.parse(localStorage.getItem('sunshineRecords')) || [];
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+            window.location.href = 'login.html';
+            return;
+        }
+        
+        // 显示当前用户名
+        document.getElementById('currentUserDisplay').textContent = `欢迎，${currentUser}`;
+        
+        // 添加退出登录功能
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'login.html';
+        });
+        
+        this.records = JSON.parse(localStorage.getItem(`sunshineRecords_${currentUser}`)) || [];
         this.currentDate = new Date();
         this.statsChart = null;
         
@@ -137,7 +152,7 @@ class SunshineTracker {
             duration: this.pendingRecord.duration
         });
 
-        localStorage.setItem('sunshineRecords', JSON.stringify(this.records));
+        this.saveRecords();
         
         const activePeriod = document.querySelector('.period-btn.active').dataset.period;
         this.updateStats(activePeriod);
@@ -182,7 +197,7 @@ class SunshineTracker {
             duration: duration * 60 * 1000
         });
 
-        localStorage.setItem('sunshineRecords', JSON.stringify(this.records));
+        this.saveRecords();
         
         const activePeriod = document.querySelector('.period-btn.active').dataset.period;
         this.updateStats(activePeriod);
@@ -210,16 +225,26 @@ class SunshineTracker {
         if (this.statsChart) {
             this.statsChart.destroy();
         }
+        
+        // 定义渐变色
+        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(255, 140, 0, 0.8)');    // 明亮的橙色
+        gradient.addColorStop(1, 'rgba(255, 183, 77, 0.2)');   // 淡橙色
+
         this.statsChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: [],
                 datasets: [{
-                    label: '晒太阳时长（分��）',
+                    label: '晒太阳时长（分钟）',
                     data: [],
-                    backgroundColor: '#ff8c00',
-                    borderRadius: 5,
-                    hoverBackgroundColor: '#ffa726'
+                    backgroundColor: gradient,
+                    borderRadius: 8,
+                    borderSkipped: false,  // 使柱状图两端都是圆角
+                    barThickness: 'flex',  // 自适应宽度
+                    maxBarThickness: 35,   // 最大宽度限制
+                    hoverBackgroundColor: 'rgba(255, 140, 0, 0.9)',
+                    hoverBorderWidth: 0
                 }]
             },
             options: {
@@ -233,12 +258,26 @@ class SunshineTracker {
                     y: {
                         beginAtZero: true,
                         grid: {
-                            color: 'rgba(0, 0, 0, 0.1)'
+                            color: 'rgba(0, 0, 0, 0.05)',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            font: {
+                                size: 11
+                            },
+                            padding: 8,
+                            color: '#666'
                         }
                     },
                     x: {
                         grid: {
                             display: false
+                        },
+                        ticks: {
+                            font: {
+                                size: 11
+                            },
+                            color: '#666'
                         }
                     }
                 },
@@ -247,10 +286,27 @@ class SunshineTracker {
                         display: true,
                         position: 'top',
                         labels: {
+                            boxWidth: 12,
+                            usePointStyle: true,
+                            pointStyle: 'circle',
+                            padding: 15,
+                            color: '#666',
                             font: {
-                                size: 14
+                                size: 12
                             }
                         }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                        titleFont: {
+                            size: 13
+                        },
+                        bodyFont: {
+                            size: 12
+                        },
+                        padding: 10,
+                        cornerRadius: 6,
+                        displayColors: false
                     }
                 }
             }
@@ -393,6 +449,11 @@ class SunshineTracker {
             dayDiv.textContent = i;
             calendarDays.appendChild(dayDiv);
         }
+    }
+
+    saveRecords() {
+        const currentUser = localStorage.getItem('currentUser');
+        localStorage.setItem(`sunshineRecords_${currentUser}`, JSON.stringify(this.records));
     }
 }
 

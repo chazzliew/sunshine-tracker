@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - 晒太阳打卡</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a472a 0%, #2d5a4c 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+            border: 2px solid #FFD700;
+        }
+
+        h1 {
+            text-align: center;
+            color: #D42426;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #D42426;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #D42426;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e82a2c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 36, 38, 0.3);
+        }
+
+        .switch-form {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .switch-form a {
+            color: #D42426;
+            text-decoration: none;
+            margin-left: 5px;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+
+            input {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>☀️ 晒太阳打卡</h1>
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="username">用户名</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">密码</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" id="loginBtn">登录</button>
+        </form>
+        <div class="switch-form">
+            还没有账号？<a href="#" id="switchToRegister">立即注册</a>
+        </div>
+    </div>
+
+    <script>
+        // 存储用户数据
+        const users = JSON.parse(localStorage.getItem('users')) || {};
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const button = document.querySelector('button');
+
+            if (button.textContent === '注册') {
+                // 注册逻辑
+                if (users[username]) {
+                    alert('用户名已存在！');
+                    return;
+                }
+                users[username] = password;
+                localStorage.setItem('users', JSON.stringify(users));
+                alert('注册成功！请登录');
+                location.reload();
+            } else {
+                // 登录逻辑
+                if (!users[username] || users[username] !== password) {
+                    alert('用户名或密码错误！');
+                    return;
+                }
+                localStorage.setItem('currentUser', username);
+                window.location.href = 'index.html';
+            }
+        });
+
+        document.getElementById('switchToRegister').addEventListener('click', (e) => {
+            e.preventDefault();
+            // 切换到注册表单
+            const form = document.getElementById('loginForm');
+            const switchText = document.querySelector('.switch-form');
+            const title = document.querySelector('h1');
+            const button = document.querySelector('button');
+
+            if (button.textContent === '登录') {
+                title.textContent = '☀️ 注册新账号';
+                button.textContent = '注册';
+                switchText.innerHTML = '已有账号？<a href="#" id="switchToLogin">立即登录</a>';
+            } else {
+                title.textContent = '☀️ 晒太阳打卡';
+                button.textContent = '登录';
+                switchText.innerHTML = '还没有账号？<a href="#" id="switchToRegister">立即注册</a>';
+            }
+        });
+    </script>
+</body>
+</html> 

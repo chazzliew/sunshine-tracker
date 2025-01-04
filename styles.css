@@ -605,4 +605,30 @@ h1 {
         font-size: 12px;
         padding: 5px 10px;
     }
+}
+
+/* 补打卡对话框样式 */
+#makeupDialog .dialog-content {
+    max-width: 360px;
+}
+
+#makeupDialog .time-input-group {
+    margin: 20px 0;
+}
+
+#makeupDialog .makeup-date {
+    color: #666;
+    text-align: center;
+    margin: 10px 0;
+    font-size: 15px;
+}
+
+@media (max-width: 430px) {
+    #makeupDialog .time-input-group {
+        margin: 15px 0;
+    }
+    
+    #makeupDialog .makeup-date {
+        font-size: 14px;
+    }
 } 

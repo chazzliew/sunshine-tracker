@@ -104,6 +104,29 @@
         </div>
     </div>
 
+    <!-- 补打卡对话框 -->
+    <div id="makeupDialog" class="dialog-overlay">
+        <div class="dialog-content">
+            <h4>补录打卡记录</h4>
+            <p class="makeup-date"></p>
+            <div class="time-input-group">
+                <div class="time-input">
+                    <label>开始时间</label>
+                    <input type="time" id="makeupStartTime" required>
+                </div>
+                <div class="time-input">
+                    <label>结束时间</label>
+                    <input type="time" id="makeupEndTime" required>
+                </div>
+            </div>
+            <div class="duration-hint">时长：<span id="makeupDurationHint">0</span> 分钟</div>
+            <div class="dialog-buttons">
+                <button id="confirmMakeup" class="btn-primary">确认补录</button>
+                <button id="cancelMakeup" class="btn-secondary">取消</button>
+            </div>
+        </div>
+    </div>
+
     <script src="./script.js"></script>
     <script src="./snow-effect.js"></script>
 </body>

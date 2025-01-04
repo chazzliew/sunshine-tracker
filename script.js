@@ -18,6 +18,7 @@ class SunshineTracker {
         this.records = JSON.parse(localStorage.getItem(`sunshineRecords_${currentUser}`)) || [];
         this.currentDate = new Date();
         this.statsChart = null;
+        this.selectedDate = null;
         
         this.initializeElements();
         this.bindEvents();
@@ -25,6 +26,7 @@ class SunshineTracker {
         this.updateStats('week');
         this.renderCalendar();
         this.initializeDateTimeDisplay();
+        this.initializeMakeupDialog();
     }
 
     initializeElements() {
@@ -454,6 +456,77 @@ class SunshineTracker {
     saveRecords() {
         const currentUser = localStorage.getItem('currentUser');
         localStorage.setItem(`sunshineRecords_${currentUser}`, JSON.stringify(this.records));
+    }
+
+    initializeMakeupDialog() {
+        this.makeupDialog = document.getElementById('makeupDialog');
+        this.makeupStartTime = document.getElementById('makeupStartTime');
+        this.makeupEndTime = document.getElementById('makeupEndTime');
+        this.makeupDurationHint = document.getElementById('makeupDurationHint');
+        
+        // 监听时间输入变化
+        this.makeupStartTime.addEventListener('change', () => this.updateMakeupDurationHint());
+        this.makeupEndTime.addEventListener('change', () => this.updateMakeupDurationHint());
+        
+        // 绑定按钮事件
+        document.getElementById('confirmMakeup').addEventListener('click', () => this.confirmMakeup());
+        document.getElementById('cancelMakeup').addEventListener('click', () => this.hideMakeupDialog());
+    }
+
+    updateMakeupDurationHint() {
+        if (this.makeupStartTime.value && this.makeupEndTime.value) {
+            const duration = this.calculateDuration(
+                this.makeupStartTime.value,
+                this.makeupEndTime.value
+            );
+            this.makeupDurationHint.textContent = duration;
+        }
+    }
+
+    showMakeupDialog(date) {
+        this.selectedDate = date;
+        this.makeupDialog.querySelector('.makeup-date').textContent = 
+            `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+        this.makeupDialog.style.display = 'flex';
+        
+        // 重置输入
+        this.makeupStartTime.value = '';
+        this.makeupEndTime.value = '';
+        this.makeupDurationHint.textContent = '0';
+    }
+
+    hideMakeupDialog() {
+        this.makeupDialog.style.display = 'none';
+        this.selectedDate = null;
+    }
+
+    confirmMakeup() {
+        if (!this.makeupStartTime.value || !this.makeupEndTime.value) {
+            alert('请输入完整的时间！');
+            return;
+        }
+
+        const duration = this.calculateDuration(
+            this.makeupStartTime.value,
+            this.makeupEndTime.value
+        );
+
+        const startTime = new Date(this.selectedDate);
+        const [hours, minutes] = this.makeupStartTime.value.split(':');
+        startTime.setHours(hours, minutes, 0);
+
+        this.records.push({
+            date: startTime.toISOString(),
+            startTime: this.makeupStartTime.value,
+            endTime: this.makeupEndTime.value,
+            duration: duration * 60 * 1000
+        });
+
+        this.saveRecords();
+        this.updateStats(document.querySelector('.period-btn.active').dataset.period);
+        this.renderCalendar();
+        this.showSuccessFeedback('补录成功！☀️');
+        this.hideMakeupDialog();
     }
 }
 

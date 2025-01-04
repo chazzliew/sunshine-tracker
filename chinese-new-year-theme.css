@@ -34,8 +34,8 @@ body {
 
 /* 标题新年风格 */
 h1 {
-    color: var(--cny-red);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    color: var(--cny-gold);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     position: relative;
 }
 
@@ -44,6 +44,7 @@ h1::before, h1::after {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 h1::before {

@@ -316,81 +316,112 @@ class SunshineTracker {
     }
 
     updateStats(period) {
-        let startDate = new Date();
-        let labels = [];
-        let data = [];
-
-        switch(period) {
-            case 'week':
-                startDate.setDate(startDate.getDate() - 6);
-                for (let i = 0; i < 7; i++) {
-                    const date = new Date(startDate);
-                    date.setDate(date.getDate() + i);
-                    labels.push(date.toLocaleDateString('zh-CN', { weekday: 'short' }));
-                    
-                    const dayRecords = this.records.filter(record => 
-                        new Date(record.date).toDateString() === date.toDateString()
-                    );
-                    const totalMinutes = dayRecords.reduce((sum, record) => 
-                        sum + record.duration / (60 * 1000), 0
-                    );
-                    data.push(totalMinutes);
-                }
+        const now = new Date();
+        let startDate;
+        let records;
+        
+        switch (period) {
+            case '7days':
+                startDate = new Date(now);
+                startDate.setDate(startDate.getDate() - 6); // 包括今天在内的7天
+                records = this.records.filter(record => 
+                    new Date(record.date) >= startDate && 
+                    new Date(record.date) <= now
+                );
+                this.updateChart(records, '近7天打卡时长', 7);
                 break;
-
+                
+            case '30days':
+                startDate = new Date(now);
+                startDate.setDate(startDate.getDate() - 29); // 包括今天在内的30天
+                records = this.records.filter(record => 
+                    new Date(record.date) >= startDate && 
+                    new Date(record.date) <= now
+                );
+                this.updateChart(records, '近30天打卡时长', 30);
+                break;
+                
             case 'month':
-                startDate.setDate(1);
-                const daysInMonth = new Date(
-                    startDate.getFullYear(),
-                    startDate.getMonth() + 1,
-                    0
-                ).getDate();
-
-                for (let i = 1; i <= daysInMonth; i++) {
-                    labels.push(i + '日');
-                    const date = new Date(startDate.getFullYear(), startDate.getMonth(), i);
-                    const dayRecords = this.records.filter(record =>
-                        new Date(record.date).toDateString() === date.toDateString()
-                    );
-                    const totalMinutes = dayRecords.reduce((sum, record) =>
-                        sum + record.duration / (60 * 1000), 0
-                    );
-                    data.push(totalMinutes);
-                }
-                break;
-
-            case 'year':
-                const months = ['1月', '2月', '3月', '4月', '5月', '6月',
-                              '7月', '8月', '9月', '10月', '11月', '12月'];
-                for (let i = 0; i < 12; i++) {
-                    labels.push(months[i]);
-                    const monthRecords = this.records.filter(record => {
-                        const date = new Date(record.date);
-                        return date.getMonth() === i &&
-                               date.getFullYear() === startDate.getFullYear();
-                    });
-                    const totalMinutes = monthRecords.reduce((sum, record) =>
-                        sum + record.duration / (60 * 1000), 0
-                    );
-                    data.push(totalMinutes);
-                }
+                // 获取当前选中的月份（默认当月）
+                const selectedMonth = this.currentDate.getMonth();
+                const selectedYear = this.currentDate.getFullYear();
+                records = this.records.filter(record => {
+                    const recordDate = new Date(record.date);
+                    return recordDate.getMonth() === selectedMonth && 
+                           recordDate.getFullYear() === selectedYear;
+                });
+                const monthName = `${selectedYear}年${selectedMonth + 1}月`;
+                this.updateChart(records, `${monthName}打卡时长`, 
+                    new Date(selectedYear, selectedMonth + 1, 0).getDate()); // 当月天数
                 break;
         }
 
-        this.statsChart.data.labels = labels;
-        this.statsChart.data.datasets[0].data = data;
-        this.statsChart.update();
+        // 更新统计数据
+        const totalMinutes = Math.round(records.reduce((sum, record) => sum + record.duration, 0) / (60 * 1000));
+        const averageMinutes = records.length ? Math.round(totalMinutes / records.length) : 0;
 
-        const totalMinutes = data.reduce((sum, val) => sum + val, 0);
-        const nonZeroDays = data.filter(val => val > 0).length;
-        const averageMinutes = nonZeroDays ? totalMinutes / nonZeroDays : 0;
+        document.getElementById('totalDuration').textContent = `${totalMinutes}分钟`;
+        document.getElementById('averageDuration').textContent = `${averageMinutes}分钟`;
+        document.getElementById('checkInCount').textContent = `${records.length}次`;
+    }
 
-        document.getElementById('totalDuration').textContent = 
-            `${Math.round(totalMinutes)}分钟`;
-        document.getElementById('averageDuration').textContent = 
-            `${Math.round(averageMinutes)}分钟`;
-        document.getElementById('checkInCount').textContent = 
-            `${nonZeroDays}次`;
+    updateChart(records, title, days) {
+        const labels = [];
+        const data = new Array(days).fill(0);
+        
+        // 生成日期标签
+        for (let i = days - 1; i >= 0; i--) {
+            const date = new Date();
+            date.setDate(date.getDate() - i);
+            labels.push(`${date.getMonth() + 1}/${date.getDate()}`);
+        }
+        
+        // 填充数据
+        records.forEach(record => {
+            const recordDate = new Date(record.date);
+            const dayIndex = days - 1 - Math.floor((new Date() - recordDate) / (24 * 60 * 60 * 1000));
+            if (dayIndex >= 0 && dayIndex < days) {
+                data[dayIndex] += record.duration / (60 * 1000); // 转换为分钟
+            }
+        });
+
+        // 更新图表
+        if (this.statsChart) {
+            this.statsChart.destroy();
+        }
+
+        const ctx = document.getElementById('statsChart').getContext('2d');
+        this.statsChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '打卡时长（分钟）',
+                    data: data,
+                    backgroundColor: 'rgba(255, 140, 0, 0.5)',
+                    borderColor: 'rgba(255, 140, 0, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: value => `${Math.round(value)}分钟`
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: title
+                    }
+                }
+            }
+        });
     }
 
     renderCalendar() {

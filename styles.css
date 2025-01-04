@@ -18,6 +18,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    position: relative;
+    z-index: 2;
 }
 
 /* 日期时间显示样式 */
@@ -139,8 +141,8 @@ h1 {
 
 /* 对话框样式 */
 .dialog-overlay {
-    display: none;
     position: fixed;
+    display: none;
     top: 0;
     left: 0;
     right: 0;
@@ -631,4 +633,26 @@ h1 {
     #makeupDialog .makeup-date {
         font-size: 14px;
     }
+}
+
+/* 确保其他元素可以正常点击 */
+.stats-period-selector button,
+.calendar-header button,
+.calendar-day {
+    position: relative;
+    z-index: 2;
+}
+
+/* 确保所有交互元素在烟花效果之上 */
+.container {
+    position: relative;
+    z-index: 2;
+}
+
+.dialog-overlay {
+    z-index: 1000;
+}
+
+.calendar-tooltip {
+    z-index: 10;
 } 

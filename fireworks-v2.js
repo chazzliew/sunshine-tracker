@@ -1,34 +1,37 @@
 class FireworksEffect {
     constructor() {
+        this.container = document.getElementById('fireworks-container');
+        this.isMobile = window.innerWidth <= 768;
         this.setupFireworks();
     }
 
     setupFireworks() {
-        // 只保留随机触发烟花，但降低频率和概率
+        // 移动端降低频率和粒子数量
         setInterval(() => {
-            if (Math.random() < 0.2) { // 降低到20%概率
+            if (Math.random() < (this.isMobile ? 0.15 : 0.2)) {
                 this.createFirework();
             }
-        }, 5000); // 增加间隔到5秒
+        }, this.isMobile ? 6000 : 5000);
     }
 
     createFirework(x, y) {
-        // 如果没有指定位置，随机生成
         const originX = x ? x / window.innerWidth : Math.random();
-        const originY = y ? y / window.innerHeight : 0.3; // 固定在上部区域
+        const originY = y ? y / window.innerHeight : 0.2; // 在移动端更靠上
 
-        // 创建烟花效果
         confetti({
-            particleCount: 80,    // 减少粒子数量
-            spread: 60,
+            particleCount: this.isMobile ? 50 : 80, // 移动端减少粒子数
+            spread: this.isMobile ? 45 : 60,
             origin: { x: originX, y: originY },
             colors: ['#e60012', '#ffd700', '#ff6b6b', '#ffc107'],
-            ticks: 150,          // 减少持续时间
-            gravity: 1,          // 增加重力
-            scalar: 1,
-            shapes: ['circle'],  // 只使用圆形
-            zIndex: 1,          // 降低z-index，确保不会遮挡交互元素
-            disableForReducedMotion: true // 支持减少动画
+            ticks: this.isMobile ? 120 : 150,
+            gravity: 1,
+            scalar: this.isMobile ? 0.8 : 1, // 移动端缩小粒子
+            shapes: ['circle'],
+            zIndex: 1,
+            disableForReducedMotion: true,
+            resize: true,
+            useWorker: true,
+            appendTo: this.container
         });
     }
 }

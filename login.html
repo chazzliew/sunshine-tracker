@@ -13,42 +13,79 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: linear-gradient(135deg, #1a472a 0%, #2d5a4c 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: linear-gradient(135deg, #8b0000 0%, #e60012 100%);
+            padding: 20px;
         }
 
         .login-container {
             background: rgba(255, 255, 255, 0.95);
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: 90%;
+            width: 100%;
             max-width: 400px;
-            border: 2px solid #FFD700;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            border: 2px solid #ffd700;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border: 2px solid #ffd700;
+            border-radius: 12px;
+            animation: borderGlow 3s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes borderGlow {
+            0% { box-shadow: 0 0 3px #ffd700; }
+            50% { box-shadow: 0 0 10px #ffd700; }
+            100% { box-shadow: 0 0 3px #ffd700; }
         }
 
         h1 {
             text-align: center;
-            color: #D42426;
+            color: #e60012;
             margin-bottom: 30px;
             font-size: 24px;
+            position: relative;
+        }
+
+        h1::before, h1::after {
+            content: '🏮';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        h1::before {
+            left: 20px;
+        }
+
+        h1::after {
+            right: 20px;
         }
 
         .input-group {
             margin-bottom: 20px;
         }
 
-        label {
+        .input-group label {
             display: block;
             margin-bottom: 8px;
             color: #666;
-            font-size: 14px;
         }
 
-        input {
+        .input-group input {
             width: 100%;
             padding: 12px;
             border: 2px solid #eee;
@@ -57,15 +94,15 @@
             transition: all 0.3s ease;
         }
 
-        input:focus {
-            border-color: #D42426;
+        .input-group input:focus {
+            border-color: #e60012;
             outline: none;
         }
 
         button {
             width: 100%;
             padding: 12px;
-            background-color: #D42426;
+            background: #e60012;
             color: white;
             border: none;
             border-radius: 25px;
@@ -75,42 +112,52 @@
         }
 
         button:hover {
-            background-color: #e82a2c;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(212, 36, 38, 0.3);
+            background: #8b0000;
         }
 
         .switch-form {
             text-align: center;
             margin-top: 20px;
-            font-size: 14px;
             color: #666;
         }
 
         .switch-form a {
-            color: #D42426;
+            color: #e60012;
             text-decoration: none;
-            margin-left: 5px;
+            font-weight: 500;
         }
 
-        @media (max-width: 480px) {
+        .switch-form a:hover {
+            text-decoration: underline;
+        }
+
+        /* 移动端优化 */
+        @media (max-width: 430px) {
             .login-container {
                 padding: 20px;
             }
 
             h1 {
-                font-size: 20px;
-                margin-bottom: 20px;
+                font-size: 22px;
+                margin-bottom: 25px;
             }
 
-            input {
-                font-size: 14px;
+            h1::before, h1::after {
+                display: none;
+            }
+
+            .input-group {
+                margin-bottom: 15px;
+            }
+
+            .input-group input {
                 padding: 10px;
+                font-size: 15px;
             }
 
             button {
-                font-size: 14px;
                 padding: 10px;
+                font-size: 15px;
             }
         }
     </style>

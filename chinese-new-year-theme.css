@@ -30,6 +30,8 @@ body {
     border: 2px solid var(--cny-gold);
     border-radius: 12px;
     animation: borderGlow 2s infinite;
+    pointer-events: none;
+    z-index: 1;
 }
 
 /* 标题新年风格 */
@@ -90,5 +92,73 @@ h1::after {
 @media (max-width: 768px) {
     h1::before, h1::after {
         display: none;
+    }
+}
+
+/* 确保按钮可点击 */
+.period-btn,
+#checkInBtn,
+.calendar-day,
+.calendar-header button,
+.dialog-content,
+.time-input input {
+    position: relative;
+    z-index: 3;
+}
+
+/* 移动端优化 */
+@media (max-width: 430px) {
+    /* 减小卡片内边距 */
+    .card-container {
+        padding: 15px;
+    }
+
+    /* 优化发光效果 */
+    .card-container::before {
+        animation: borderGlow 3s infinite; /* 降低动画频率 */
+    }
+
+    @keyframes borderGlow {
+        0% { box-shadow: 0 0 3px var(--cny-gold); }
+        50% { box-shadow: 0 0 10px var(--cny-gold); }
+        100% { box-shadow: 0 0 3px var(--cny-gold); }
+    }
+
+    /* 调整标题大小和间距 */
+    h1 {
+        font-size: 24px;
+        margin: 15px 0;
+    }
+
+    /* 优化按钮样式 */
+    #checkInBtn {
+        padding: 10px 30px;
+        font-size: 15px;
+    }
+
+    /* 调整统计按钮组 */
+    .stats-period-selector {
+        gap: 5px;
+    }
+
+    .period-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+}
+
+/* 针对较小屏幕的额外优化 */
+@media (max-width: 360px) {
+    .card-container {
+        padding: 12px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .period-btn {
+        padding: 5px 10px;
+        font-size: 12px;
     }
 } 

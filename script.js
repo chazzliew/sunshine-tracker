@@ -426,6 +426,22 @@ class SunshineTracker {
                 new Date(record.date).toDateString() === currentDate.toDateString()
             );
 
+            // 添加点击事件
+            dayDiv.addEventListener('click', () => {
+                if (dayRecords.length > 0) {
+                    // 显示已有记录
+                    const recordsInfo = dayRecords.map(record => 
+                        `${record.startTime}~${record.endTime}，晒太阳${Math.round(record.duration / (60 * 1000))}分钟`
+                    ).join('\n');
+                    alert(`${month + 1}月${i}日的打卡记录：\n${recordsInfo}`);
+                } else {
+                    // 询问是否补打卡
+                    if (confirm(`${month + 1}月${i}日没有打卡记录，是否要补录？`)) {
+                        this.showMakeupDialog(currentDate);
+                    }
+                }
+            });
+
             if (dayRecords.length > 0) {
                 dayDiv.classList.add('checked');
                 

@@ -11,9 +11,18 @@ class FireworksEffect {
             }
         }, 3000);
 
-        // 点击触发烟花
+        // 点击触发烟花，但排除按钮和输入框
         document.addEventListener('click', (e) => {
-            this.createFirework(e.clientX, e.clientY);
+            // 检查点击的元素是否是按钮、输入框或其他交互元素
+            const isInteractive = e.target.matches('button, input, select, .calendar-day, a, .dialog-overlay');
+            
+            // 检查点击的元素是否在对话框内
+            const isInDialog = e.target.closest('.dialog-content');
+            
+            // 如果不是交互元素且不在对话框内，才触发烟花
+            if (!isInteractive && !isInDialog) {
+                this.createFirework(e.clientX, e.clientY);
+            }
         });
     }
 

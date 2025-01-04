@@ -196,15 +196,16 @@ h1 {
 .stats-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 25px;
-    padding-right: 10px;
+    white-space: nowrap;
 }
 
 .stats-period-selector {
     display: flex;
     gap: 8px;
-    margin-left: 20px;
+    margin-left: auto;
+    padding-left: 20px;
 }
 
 .period-btn {
@@ -501,20 +502,26 @@ h1 {
     /* 数据统计部分的按钮和数据 */
     .stats-header {
         flex-direction: row;
-        justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
-        padding-right: 0;
     }
 
     .stats-period-selector {
-        margin-left: 15px;
+        padding-left: 15px;
     }
 
     .period-btn {
         padding: 4px 8px;
         font-size: 10px;
         border-radius: 10px;
+        min-width: 32px;
+        text-align: center;
+    }
+
+    /* 标题文字大小调整 */
+    .card-container h2 {
+        font-size: 16px;
+        white-space: nowrap;
     }
 
     /* 统计数据显示优化 */

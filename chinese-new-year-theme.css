@@ -1,0 +1,93 @@
+/* 农历新年主题色彩 */
+:root {
+    --cny-red: #e60012;
+    --cny-gold: #ffd700;
+    --cny-dark: #8b0000;
+    --cny-light: #fff1f1;
+}
+
+/* 背景渐变 */
+body {
+    background: linear-gradient(135deg, #8b0000 0%, #e60012 100%);
+    min-height: 100vh;
+}
+
+/* 卡片新年风格 */
+.card-container {
+    border: 2px solid var(--cny-gold);
+    background: rgba(255, 255, 255, 0.95);
+    position: relative;
+    overflow: hidden;
+}
+
+.card-container::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border: 2px solid var(--cny-gold);
+    border-radius: 12px;
+    animation: borderGlow 2s infinite;
+}
+
+/* 标题新年风格 */
+h1 {
+    color: var(--cny-red);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+h1::before, h1::after {
+    content: '🏮';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+h1::before {
+    left: -40px;
+}
+
+h1::after {
+    right: -40px;
+}
+
+/* 按钮新年风格 */
+#checkInBtn {
+    background-color: var(--cny-red);
+}
+
+#checkInBtn:hover {
+    background-color: var(--cny-dark);
+}
+
+/* 统计图表新年配色 */
+.stats-overview .period-btn.active {
+    background: var(--cny-red);
+}
+
+/* 日历新年风格 */
+.calendar-day {
+    background: var(--cny-light);
+}
+
+.calendar-day.checked {
+    background-color: rgba(230, 0, 18, 0.1);
+    color: var(--cny-red);
+}
+
+/* 动画效果 */
+@keyframes borderGlow {
+    0% { box-shadow: 0 0 5px var(--cny-gold); }
+    50% { box-shadow: 0 0 15px var(--cny-gold); }
+    100% { box-shadow: 0 0 5px var(--cny-gold); }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    h1::before, h1::after {
+        display: none;
+    }
+} 

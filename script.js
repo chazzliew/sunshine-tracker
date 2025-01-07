@@ -23,8 +23,13 @@ class SunshineTracker {
         this.initializeElements();
         this.bindEvents();
         this.setupChart();
-        this.updateStats('week');
+        
+        // 确保先渲染日历
         this.renderCalendar();
+        
+        // 初始化时立即更新统计数据
+        this.updateStats('7days');  // 默认显示近7天数据
+        
         this.initializeDateTimeDisplay();
         this.initializeMakeupDialog();
     }
@@ -76,10 +81,18 @@ class SunshineTracker {
         document.getElementById('prevMonth').addEventListener('click', () => {
             this.currentDate.setMonth(this.currentDate.getMonth() - 1);
             this.renderCalendar();
+            // 更新月度数据
+            if (document.querySelector('.period-btn.active').dataset.period === 'month') {
+                this.updateStats('month');
+            }
         });
         document.getElementById('nextMonth').addEventListener('click', () => {
             this.currentDate.setMonth(this.currentDate.getMonth() + 1);
             this.renderCalendar();
+            // 更新月度数据
+            if (document.querySelector('.period-btn.active').dataset.period === 'month') {
+                this.updateStats('month');
+            }
         });
 
         // 对话框事件

@@ -655,4 +655,14 @@ h1 {
 
 .calendar-tooltip {
     z-index: 10;
+}
+
+@media (max-width: 430px) {
+    .datetime-display {
+        font-size: 13px;  /* 稍微减小字体 */
+    }
+
+    .current-date, .current-time {
+        padding: 6px 12px;  /* 减小内边距 */
+    }
 } 

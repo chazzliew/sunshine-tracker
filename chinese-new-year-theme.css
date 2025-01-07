@@ -161,4 +161,9 @@ h1::after {
         padding: 5px 10px;
         font-size: 12px;
     }
+}
+
+.current-date, .current-time {
+    border: 1px solid rgba(255, 215, 0, 0.3);  /* 淡金色边框 */
+    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.1);  /* 金色发光效果 */
 } 
